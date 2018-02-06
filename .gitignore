@@ -1,0 +1,38 @@
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+.idea
+
+##Eclipse###
+.project
+.pydevproject
+
+### Python ###
+*.pyc
+*.pyo
+*.egg-info/
+.cache/
+htmlcov/
+.coverage
+.cache
+.env
+.envrc
+.idea/
+
+### Misc ###
+*.log
+*.sqlite3
+*__pycache__*
+Procfile
+*.sw[po]
+docs/_build/*
+
+###flake8 config ###
+.flake8
+dump.rdb
+
+###celery ###
+celerybeat-schedule
+celerybeat.pid
+
