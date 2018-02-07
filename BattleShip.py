@@ -1,6 +1,6 @@
-from board import Board
-from ship import QShips, PShips
-from constants import ShipContants as const
+from .board import Board
+from .ship import QShips, PShips
+from .constants import ShipContants as const
 
 
 def place_ships(board, total_ships, details):
@@ -81,31 +81,23 @@ def process_shots(p1_shots, p2_shots, p1_board, p2_board, is_p1_turn):
     if len(p1_shots) > 0 or len(p2_shots) > 0:
         process_shots(p1_shots, p2_shots, p1_board, p2_board, is_p1_turn)
     else:
+        p1_ship_count = p1_board.get_active_ships_count()
+        p2_ship_count = p2_board.get_active_ships_count()
         # else find the winner and print it.
-        if p1_board.get_active_ships_count() > 0:
+        if p1_ship_count > 0 and p2_ship_count == 0:
             print("Player-1 won the battle")
-        if p2_board.get_active_ships_count() > 0:
+        elif p2_board.get_active_ships_count() > 0 and p1_ship_count == 0:
             print("Player-2 won the battle")
+        else:
+            print("Both players have active ships.")
         return
 
 
-def get_input():
-    return input()
+def get_size_input():
 
-
-def battle_ship():
-    """
-    This method performs the following steps
-    1. Takes all the user inputs
-    2. Creates and initializes Player boards
-    3. Process shots fired by player 1 and player 2
-    :return:
-    """
-    # First input to get size of the board
-    size = get_input().split(" ")
-
+    size = input().split(" ")
     # Validate size format
-    if len(size) !=2:
+    if len(size) != 2:
         return "Invalid size format."
         # exit()
 
@@ -119,33 +111,72 @@ def battle_ship():
     if not (size[1].isalpha() and size[1].isupper()) or not ord('A') <= ord(size[1]) <= ord('Z'):
         return "Invalid height of area. A <= Height of Battle area (N’) <= Z"
         # exit()
-
     width = int(size[0])
 
     height = ord(size[1]) - ord('A') + 1
+    return height, width
+
+
+def get_total_ship_input(height, width):
+    total_ships = int(input())
+    if not 1 <= total_ships <= (height * width):
+        return "Too many ships. 1 <= Number of battleships <= M’ * N’ "
+        # exit()
+
+    return total_ships
+
+
+def get_p1_ship_info_input():
+    return input()
+
+
+def get_p2_ship_info_input():
+    return input()
+
+
+def get_p1_shots_info_input():
+    return input()
+
+
+def get_p2_shots_info_input():
+    return input()
+
+
+def battle_ship():
+    """
+    This method performs the following steps
+    1. Takes all the user inputs
+    2. Creates and initializes Player boards
+    3. Process shots fired by player 1 and player 2
+    :return:
+    """
+    # First input to get size of the board
+    import pdb
+    pdb.set_trace()
+    height, width = get_size_input()
+    #
+    # width = int(size[0])
+    #
+    # height = ord(size[1]) - ord('A') + 1
 
     # Create player boards
     p1_board = Board(height, width)
     p2_board = Board(height, width)
 
     # get total ships
-    total_ships = int(input())
-    if 1 <= total_ships <= (height * width):
-        return "Too many ships. 1 <= Number of battleships <= M’ * N’ "
-        # exit()
-
+    total_ships = get_total_ship_input(height, width)
 
     # get player 1 ship details
-    p1_ship_details = input().split(" ")
+    p1_ship_details = get_p1_ship_info_input().split(" ")
 
     # get player 2 ship details
-    p2_ship_details = input().split(" ")
+    p2_ship_details = get_p2_ship_info_input().split(" ")
 
     # get player 1 shots
-    p1_shots = input().split(" ")
+    p1_shots = get_p1_shots_info_input().split(" ")
 
     # get player 2 shots
-    p2_shots = input().split(" ")
+    p2_shots = get_p2_shots_info_input().split(" ")
 
     # place ships on player 1 and player 2 board
     place_ships(p1_board, total_ships, p1_ship_details)
@@ -156,5 +187,4 @@ def battle_ship():
 
     return ""
 
-
-# battle_ship()
+# print(battle_ship())

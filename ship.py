@@ -1,5 +1,5 @@
 import abc
-from constants import ShipContants as constants
+from .constants import ShipContants as constants
 
 
 class Ship:
